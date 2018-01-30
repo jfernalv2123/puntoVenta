@@ -2,8 +2,8 @@ package prueba.data;
 
 import javax.faces.bean.ManagedProperty;
 
-import municipalidad.pto.model.Tipo;
-import municipalidad.pto.service.TipoService;
+import punto.venta.model.Tipo;
+import punto.venta.service.TipoService;
 
 public class Test {
 	@ManagedProperty(value="#{tipoService}")

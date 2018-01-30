@@ -5,7 +5,7 @@
 	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
-  <context:component-scan base-package="municipalidad.pto.*" />
+  <context:component-scan base-package="punto.venta.*" />
     
   <tx:annotation-driven/>
   
@@ -21,29 +21,15 @@
      <property name="annotatedClasses">
             <list>
             
-                <value>municipalidad.pto.model.Imagen</value>
-                <value>municipalidad.pto.model.AreaArticulo</value>
-                <value>municipalidad.pto.model.Articulos</value>
-                <value>municipalidad.pto.model.Categoria</value>
-                <value>municipalidad.pto.model.Estado</value>
-                <value>municipalidad.pto.model.Fono</value>
-                <value>municipalidad.pto.model.Mail</value>
-                <value>municipalidad.pto.model.Proveedor</value>
-                <value>municipalidad.pto.model.RelIngresoArticulo</value>
-                <value>municipalidad.pto.model.Salida</value>
-                <value>municipalidad.pto.model.Tipo</value>
-                <value>municipalidad.pto.model.Ubicacion</value>
-                <value>municipalidad.pto.model.UnidadMedida</value>
-                <value>municipalidad.pto.model.Ingreso</value>
-                <value>municipalidad.pto.model.User</value>
-                <value>municipalidad.pto.model.DireccionProveedor</value>
-                <value>municipalidad.pto.model.FotoArticulo</value>
-                <value>municipalidad.pto.model.RelSalidaArticulo</value>
-                <value>municipalidad.pto.model.RazonSocial</value>
-                <value>municipalidad.pto.model.Facturas</value>
-                <value>municipalidad.pto.model.Devolucion</value>
-                <value>municipalidad.pto.model.InformeInventario</value>
-                <value>municipalidad.pto.model.RelInformeArticulo</value>
+                <value>punto.venta.model.Articulo</value>
+                <value>punto.venta.model.IngresoArticulo</value>
+                <value>punto.venta.model.Proveedor</value>
+                <value>punto.venta.model.TipoArticulo</value>
+                <value>punto.venta.model.TipoUnidad</value>
+                <value>punto.venta.model.Usuario</value>
+                <value>punto.venta.model.Venta</value>
+                <value>punto.venta.model.VentaArticulo</value>
+
             </list>
         </property>
     <property name="hibernateProperties">
