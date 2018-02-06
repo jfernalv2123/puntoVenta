@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import punto.venta.dao.TipoUnidadDao;
 import punto.venta.model.TipoUnidad;
 
+@Repository("tipoUnidadDao")
 public class TipoUnidadDaoImpl implements TipoUnidadDao{
 
 	@Autowired

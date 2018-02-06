@@ -12,22 +12,29 @@
 </h:head>
 
 <body>
-					
+<p:breadCrumb style="font-size: 13px;">
+		<p:menuitem value="Vender" url="ventas.xhtml" />
+		<p:menuitem value="Ventas" url="ventas.xhtml" />
+		<p:menuitem value="Stock" url="stock.xhtml" />
+		<p:menuitem value="Codigos" url="barcode.xhtml" />
+		<p:menuitem value="Administrar" url="admin.xhtml" />
+	</p:breadCrumb>		
 
 
 		<h:form id="barcodeForm">
 
-		<p:dataGrid id="lista" var="area" layout="grid" columns="5"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+		<p:dataGrid id="lista" var="art" layout="grid" columns="5"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
                  paginator="true" rows="20" style="margin-bottom:20px;font-size: 9px;"
 			value="#{articuloBean.listaArticulos()}">
 			 <p:panel header="#{area.articulo}" style="text-align:center;font-size: 9px;">
-			 <h:panelGrid columns="1" style="width:100%;font-size: 9px;" >
-<canvas  id="#{area.idArticulos}"></canvas>
+			 <h:panelGrid columns="1" style="width:100%;font-size: 9px;">
+				<h:outputText value="#{art.articulo}" />
+				<canvas  id="#{art.codigo}"></canvas>
 							<script>
     	$(document).ready(function(){
-    		$("##{area.idArticulos}").JsBarcode("#{area.idArticulos}",{displayValue:true,fontSize:20});
+    		$("##{art.codigo}").JsBarcode("#{art.codigo}",{displayValue:true,fontSize:18});
              
-		});    
+		});      
     </script>
    </h:panelGrid>
 			 </p:panel>

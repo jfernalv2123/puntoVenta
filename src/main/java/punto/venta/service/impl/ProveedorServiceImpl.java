@@ -1,18 +1,21 @@
 package punto.venta.service.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import punto.venta.constantes.Constantes;
 import punto.venta.dao.ProveedorDao;
 import punto.venta.model.Proveedor;
 import punto.venta.service.ProveedorService;
 
+@Service("proveedorService")
 public class ProveedorServiceImpl implements ProveedorService{
 	
 	@Autowired
@@ -41,6 +44,10 @@ public class ProveedorServiceImpl implements ProveedorService{
 	@Transactional
 	public List<SelectItem> combo() {
 		List<SelectItem> aux = new ArrayList<SelectItem>();
+		SelectItem selec = new SelectItem();
+		selec.setLabel(Constantes.SELECCIONE);
+		selec.setValue(Constantes.CEROSTRING);
+		aux.add(selec);
 		for(Proveedor p:proveedorDao.lista()){
 			SelectItem item = new SelectItem();
 			item.setLabel(p.getNombre());

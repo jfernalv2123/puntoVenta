@@ -21,6 +21,9 @@ public class VentaArticulo implements Serializable {
 	private Integer id;
 	private Articulo articulo;
 	private Venta venta;
+	private Integer cantidad;
+	private Integer precio;
+	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id_venta_articulo", unique = true, nullable = false)
@@ -45,6 +48,20 @@ public class VentaArticulo implements Serializable {
 	}
 	public void setVenta(Venta venta) {
 		this.venta = venta;
+	}
+	@Column(name = "cantidad")
+	public Integer getCantidad() {
+		return cantidad;
+	}
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+	@Column(name = "precio")
+	public Integer getPrecio() {
+		return precio;
+	}
+	public void setPrecio(Integer precio) {
+		this.precio = precio;
 	}
 	
 	

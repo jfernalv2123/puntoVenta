@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import punto.venta.dao.ArticuloDao;
 import punto.venta.model.Articulo;
 import punto.venta.service.ArticuloService;
 
-@Repository("articuloService")
+@Service("articuloService")
 public class ArticuloServiceImpl implements ArticuloService {
 
 	@Autowired

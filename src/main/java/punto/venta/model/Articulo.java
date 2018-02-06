@@ -23,6 +23,7 @@ public class Articulo implements Serializable{
 	private String marca;
 	private Proveedor proveedor;
 	private TipoArticulo tipo;
+	private TipoUnidad tipoUnidad;
 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -69,6 +70,14 @@ public class Articulo implements Serializable{
 	}
 	public void setTipo(TipoArticulo tipo) {
 		this.tipo = tipo;
+	}
+	@ManyToOne(cascade=CascadeType.MERGE)
+	@JoinColumn(name = "fk_unidad")
+	public TipoUnidad getTipoUnidad() {
+		return tipoUnidad;
+	}
+	public void setTipoUnidad(TipoUnidad tipoUnidad) {
+		this.tipoUnidad = tipoUnidad;
 	}
 	
 	

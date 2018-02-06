@@ -1,0 +1,412 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+<h:head>
+	<title>Administración</title>
+	<link rel="icon" type="image/png" href="imagenes/logo.png" />
+	<script src="js/fecha.js"> </script>
+</h:head>
+<body>
+	<p:breadCrumb style="font-size: 13px;">
+		<p:menuitem value="Vender" url="ventas.xhtml" />
+		<p:menuitem value="Ventas" url="ventas.xhtml" />
+		<p:menuitem value="Stock" url="stock.xhtml" />
+		<p:menuitem value="Codigos" url="barcode.xhtml" />
+		<p:menuitem value="Administrar" url="admin.xhtml" />
+	</p:breadCrumb>
+	<p:panel id="proveedorPanel" header="proveedores" toggleable="true"
+		toggleSpeed="500" widgetVar="panelBus" collapsed="true"
+		style="margin-bottom:1px;margin-top:15px">
+		<h:form id="proveedorF">
+			<p:dataTable id="proveedorT" var="prov"
+				value="#{proveedorBean.lista()}" style="font-size: 11px;">
+
+				<p:column headerText="Rut" filterMatchMode="contains"
+					filterBy="#{prov.rut}">
+					<h:outputText value="#{prov.rut}" />
+				</p:column>
+				<p:column headerText="Nombre" filterMatchMode="contains"
+					filterBy="#{prov.nombre}">
+					<h:outputText value="#{prov.nombre}" />
+				</p:column>
+				<p:column headerText="Razon Social" filterMatchMode="contains"
+					filterBy="#{prov.razonSocial}">
+					<h:outputText value="#{prov.razonSocial}" />
+				</p:column>
+				<p:column headerText="Fono" filterMatchMode="contains"
+					filterBy="#{prov.fono}">
+					<h:outputText value="#{prov.fono}" />
+				</p:column>
+				<p:column headerText="Mail" filterMatchMode="contains"
+					filterBy="#{prov.mail}">
+					<h:outputText value="#{prov.mail}" />
+				</p:column>
+				<p:column style="width:24px" headerText="Modificar">
+					<p:commandButton value="Modificar" oncomplete="modProveedor.show()"
+						actionListener="#{proveedorBean.carga(prov)}"
+						update=":proveedorMod:modPro" />
+				</p:column>
+				<p:column style="width:24px" headerText="Borrar">
+					<p:commandButton value="Borrar"
+						actionListener="#{proveedorBean.borrar(prov)}"
+						update=":proveedorF:proveedorT :proveedorNuevo:msgs3" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+		<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+			<p:commandButton value="Nuevo" onclick="nuevoProveedor.show()" />
+		</div>
+		<h:form id="proveedorNuevo">
+			<p:dialog widgetVar="nuevoProveedor" header="Nuevo Proveedor"
+				modal="false" resizable="false" style="font-size: 13px;">
+
+				<p:growl id="msgs3" showDetail="true" />
+				<h:panelGrid columns="2" cellpadding="5">
+
+					<h:outputText value="Nombre : " />
+					<p:inputText value="#{proveedorBean.nombre}" />
+					<h:outputText value=" Rut : " />
+					<p:inputText value="#{proveedorBean.rut}" />
+					<h:outputText value=" Razon Social : " />
+					<p:inputText value="#{proveedorBean.razonSocial}" />
+					<h:outputText value=" Fono : " />
+					<p:inputText value="#{proveedorBean.fono}" />
+					<h:outputText value=" Mail : " />
+					<p:inputText value="#{proveedorBean.mail}" />
+
+				</h:panelGrid>
+				<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+					<p:commandButton value="Guardar"
+						actionListener="#{proveedorBean.guardar()}"
+						update=":proveedorF:proveedorT :proveedorNuevo:msgs3"
+						oncomplete="nuevoProveedor.hide()" />
+
+				</div>
+
+
+			</p:dialog>
+		</h:form>
+
+		<h:form id="proveedorMod">
+			<p:dialog widgetVar="modProveedor" header="Modificar Proveedor"
+				modal="false" resizable="false" style="font-size: 13px;">
+
+
+				<h:panelGrid id="modPro" columns="2" cellpadding="5">
+
+					<h:outputText value="Nombre : " />
+					<p:inputText value="#{proveedorBean.proveedorAux.nombre}" />
+					<h:outputText value=" Rut : " />
+					<p:inputText value="#{proveedorBean.proveedorAux.rut}" />
+					<h:outputText value=" Razon Social : " />
+					<p:inputText value="#{proveedorBean.proveedorAux.razonSocial}" />
+					<h:outputText value=" Fono : " />
+					<p:inputText value="#{proveedorBean.proveedorAux.fono}" />
+					<h:outputText value=" Mail : " />
+					<p:inputText value="#{proveedorBean.proveedorAux.mail}" />
+
+				</h:panelGrid>
+				<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+					<p:commandButton value="Guardar"
+						actionListener="#{proveedorBean.modificar()}"
+						update=":proveedorF:proveedorT :proveedorNuevo:msgs3"
+						oncomplete="modProveedor.hide()" />
+
+				</div>
+
+
+			</p:dialog>
+		</h:form>
+	</p:panel>
+	<!-- 	INICIO TIPO ARTICULO -->
+	<p:panel id="tipoArticuloPanel" header="tipo Articulo"
+		toggleable="true" toggleSpeed="500" widgetVar="panelTipoArticulo"
+		collapsed="true" style="margin-bottom:1px;margin-top:15px">
+		<h:form id="tipoArticuloF">
+			<p:dataTable id="tipoArticuloT" var="tipo"
+				value="#{tiposBean.listaTipoArticulo()}" style="font-size: 11px;">
+
+				<p:column headerText="Tipo" filterMatchMode="contains"
+					filterBy="#{tipo.tipo}">
+					<h:outputText value="#{tipo.tipo}" />
+				</p:column>
+
+				<p:column style="width:24px" headerText="Modificar">
+					<p:commandButton value="Modificar"
+						oncomplete="modTipoArticulo.show()"
+						actionListener="#{tiposBean.cargaArtculo(tipo)}"
+						update=":tipoArticuloMod:modTipoArticulo" />
+				</p:column>
+				<p:column style="width:24px" headerText="Borrar">
+					<p:commandButton value="Borrar"
+						actionListener="#{tiposBean.borrarTipoArticulo(tipo)}"
+						update=":tipoArticuloF:tipoArticuloT :proveedorNuevo:msgs3" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+		<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+			<p:commandButton value="Nuevo" onclick="nuevoTipoArticulo.show()" />
+		</div>
+		<h:form id="tipoArticuloNuevo">
+			<p:dialog widgetVar="nuevoTipoArticulo" header="Nuevo Tipo"
+				modal="false" resizable="false" style="font-size: 13px;">
+
+
+				<h:panelGrid columns="2" cellpadding="5">
+
+					<h:outputText value="Tipo : " />
+					<p:inputText value="#{tiposBean.tipo}" />
+
+
+				</h:panelGrid>
+				<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+					<p:commandButton value="Guardar"
+						actionListener="#{tiposBean.guardarTipoArticulo()}"
+						update=":tipoArticuloF:tipoArticuloT :proveedorNuevo:msgs3"
+						oncomplete="nuevoTipoArticulo.hide()" />
+
+				</div>
+
+
+			</p:dialog>
+		</h:form>
+
+		<h:form id="tipoArticuloMod">
+			<p:dialog widgetVar="modTipoArticulo"
+				header="Modificar Tipo Articulo" modal="false" resizable="false"
+				style="font-size: 13px;">
+
+
+				<h:panelGrid id="modTipoArticulo" columns="2" cellpadding="5">
+
+					<h:outputText value="Tipo : " />
+					<p:inputText value="#{tiposBean.tipoArticuloAux.tipo}" />
+
+
+				</h:panelGrid>
+				<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+					<p:commandButton value="Guardar"
+						actionListener="#{tiposBean.modificarTipoArticulo()}"
+						update=":tipoArticuloF:tipoArticuloT :proveedorNuevo:msgs3"
+						oncomplete="modTipoArticulo.hide()" />
+
+				</div>
+
+
+			</p:dialog>
+		</h:form>
+	</p:panel>
+	<!-- 	FIN TIPO ARTICULO -->
+	<!-- 	INICIO TIPO UNIDAD -->
+	<p:panel id="tipoUnidadPanel" header="tipo Unidad" toggleable="true"
+		toggleSpeed="500" widgetVar="panelTipoUnidad" collapsed="true"
+		style="margin-bottom:1px;margin-top:15px">
+		<h:form id="tipoUnidadF">
+			<p:dataTable id="tipoUnidadT" var="tipo"
+				value="#{tiposBean.listaTipoUnidad()}" style="font-size: 11px;">
+
+				<p:column headerText="Tipo" filterMatchMode="contains"
+					filterBy="#{tipo.tipo}">
+					<h:outputText value="#{tipo.tipo}" />
+				</p:column>
+
+				<p:column style="width:24px" headerText="Modificar">
+					<p:commandButton value="Modificar"
+						oncomplete="modTipoUnidad.show()"
+						actionListener="#{tiposBean.cargaUnidad(tipo)}"
+						update=":tipoUnidadMod:modTipoUnidad" />
+				</p:column>
+				<p:column style="width:24px" headerText="Borrar">
+					<p:commandButton value="Borrar"
+						actionListener="#{tiposBean.borrarTipoUnidad(tipo)}"
+						update=":tipoUnidadF:tipoUnidadT :proveedorNuevo:msgs3" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+		<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+			<p:commandButton value="Nuevo" onclick="nuevoTipoUnidad.show()" />
+		</div>
+		<h:form id="tipoUnidadNuevo">
+			<p:dialog widgetVar="nuevoTipoUnidad" header="Nuevo Tipo"
+				modal="false" resizable="false" style="font-size: 13px;">
+
+
+				<h:panelGrid columns="2" cellpadding="5">
+
+					<h:outputText value="Tipo : " />
+					<p:inputText value="#{tiposBean.tipo}" />
+
+
+				</h:panelGrid>
+				<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+					<p:commandButton value="Guardar"
+						actionListener="#{tiposBean.guardarTipoUnidad()}"
+						update=":tipoUnidadF:tipoUnidadT :proveedorNuevo:msgs3"
+						oncomplete="nuevoTipoUnidad.hide()" />
+
+				</div>
+
+
+			</p:dialog>
+		</h:form>
+
+		<h:form id="tipoUnidadMod">
+			<p:dialog widgetVar="modTipoUnidad" header="Modificar Tipo Unidad"
+				modal="false" resizable="false" style="font-size: 13px;">
+
+
+				<h:panelGrid id="modTipoUnidad" columns="2" cellpadding="5">
+
+					<h:outputText value="Tipo : " />
+					<p:inputText value="#{tiposBean.tipoUnidadAux.tipo}" />
+
+
+				</h:panelGrid>
+				<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+					<p:commandButton value="Guardar"
+						actionListener="#{tiposBean.modificarTipoUnidad()}"
+						update=":tipoUnidadF:tipoUnidadT :proveedorNuevo:msgs3"
+						oncomplete="modTipoUnidad.hide()" />
+
+				</div>
+
+
+			</p:dialog>
+		</h:form>
+	</p:panel>
+	<!-- 	FIN TIPO UNIDAD -->
+	<!-- 	INICIO USUARIO -->
+	<p:panel id="usuarioPanel" header="Usuario" toggleable="true"
+		toggleSpeed="500" widgetVar="panelUsuario" collapsed="true"
+		style="margin-bottom:1px;margin-top:15px">
+		<h:form id="usuarioF">
+			<p:dataTable id="usuarioT" var="user" value="#{usuarioBean.lista()}"
+				style="font-size: 11px;">
+
+				<p:column headerText="Primer Nombre" filterMatchMode="contains"
+					filterBy="#{user.nombre}">
+					<h:outputText value="#{user.nombre}" />
+				</p:column>
+				<p:column headerText="Segundo Nombre" filterMatchMode="contains"
+					filterBy="#{user.nombre2}">
+					<h:outputText value="#{user.nombre2}" />
+				</p:column>
+				<p:column headerText="Apellido Paterno" filterMatchMode="contains"
+					filterBy="#{user.apellido}">
+					<h:outputText value="#{user.apellido}" />
+				</p:column>
+				<p:column headerText="Apellido Materno" filterMatchMode="contains"
+					filterBy="#{user.apellido2}">
+					<h:outputText value="#{user.apellido2}" />
+				</p:column>
+				<p:column headerText="Nivel" filterMatchMode="contains"
+					filterBy="#{user.nivel}">
+					<h:outputText value="#{user.nivel}" />
+				</p:column>
+
+				<p:column style="width:24px" headerText="Modificar">
+					<p:commandButton value="Modificar" oncomplete="modUsuario.show()"
+						actionListener="#{usuarioBean.carga(user)}"
+						update=":usuarioMod:modUsuario" />
+				</p:column>
+				<p:column style="width:24px" headerText="Borrar">
+					<p:commandButton value="Borrar"
+						actionListener="#{usuarioBean.borrar(user)}"
+						update=":usuarioF:usuarioT :proveedorNuevo:msgs3" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+		<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+			<p:commandButton value="Nuevo" onclick="nuevoUsuario.show()" />
+		</div>
+		<h:form id="usuarioNuevo">
+			<p:dialog widgetVar="nuevoUsuario" header="Nuevo Usuario"
+				modal="false" resizable="false" style="font-size: 13px;">
+
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputText value="Rut : " />
+					<p:inputText value="#{usuarioBean.rut}" />
+					<h:outputText value="Primer Nombre : " />
+					<p:inputText value="#{usuarioBean.nombre}" />
+					<h:outputText value="Segundo Nombre : " />
+					<p:inputText value="#{usuarioBean.nombre2}" />
+					<h:outputText value="Apellido Paterno : " />
+					<p:inputText value="#{usuarioBean.apellido}" />
+					<h:outputText value="Apellido Materno : " />
+					<p:inputText value="#{usuarioBean.apellido2}" />
+					<h:outputText value="Contraseña : " />
+					<p:inputText value="#{usuarioBean.pass}" />
+					<h:outputText value="Cargo : " />
+					<p:selectOneMenu value="#{usuarioBean.nivel}" label="origen">
+						<f:selectItems value="#{usuarioBean.niveles()}" var="niveles" />
+					</p:selectOneMenu>
+
+
+				</h:panelGrid>
+				<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+					<p:commandButton value="Guardar"
+						actionListener="#{usuarioBean.guardar()}"
+						update=":usuarioF:usuarioT :proveedorNuevo:msgs3"
+						oncomplete="nuevoUsuario.hide()" />
+
+				</div>
+
+
+			</p:dialog>
+		</h:form>
+
+		<h:form id="usuarioMod">
+			<p:dialog widgetVar="modUsuario" header="Modificar Usuario"
+				modal="false" resizable="false" style="font-size: 13px;">
+
+
+				<h:panelGrid id="modUsuario" columns="2" cellpadding="5">
+					<h:outputText value="Primer Nombre : " />
+					<p:inputText value="#{usuarioBean.usuarioAux.rut}" />
+					<h:outputText value="Primer Nombre : " />
+					<p:inputText value="#{usuarioBean.usuarioAux.nombre}" />
+					<h:outputText value="Segundo Nombre : " />
+					<p:inputText value="#{usuarioBean.usuarioAux.nombre2}" />
+					<h:outputText value="Apellido Paterno : " />
+					<p:inputText value="#{usuarioBean.usuarioAux.apellido}" />
+					<h:outputText value="Apellido Materno : " />
+					<p:inputText value="#{usuarioBean.usuarioAux.apellido2}" />
+					<h:outputText value="Contraseña : " />
+					<p:inputText value="#{usuarioBean.usuarioAux.pass}" />
+<!-- 					<h:outputText value="Cargo : " /> -->
+<!-- 					<p:selectOneMenu value="#{usuarioBean.usuarioAux.nivel}" label="origen"> -->
+<!-- 						<f:selectItems value="#{usuarioBean.niveles()}" var="niveles" /> -->
+<!-- 					</p:selectOneMenu> -->
+
+
+
+				</h:panelGrid>
+				<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+					<p:commandButton value="Guardar"
+						actionListener="#{usuarioBean.modificar()}"
+						update=":usuarioF:usuarioT :proveedorNuevo:msgs3"
+						oncomplete="modUsuario.hide()" />
+
+				</div>
+
+
+			</p:dialog>
+		</h:form>
+	</p:panel>
+	<!-- 	FIN USUARIO -->
+	
+</body>
+</html>

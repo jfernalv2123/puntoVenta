@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import punto.venta.dao.UsuarioDao;
 import punto.venta.model.Usuario;
 
+@Repository("usuarioDao")
 public class UsuarioDaoImpl implements UsuarioDao{
 
 	@Autowired
@@ -31,5 +33,9 @@ public class UsuarioDaoImpl implements UsuarioDao{
 	public List<Usuario> lista(){
 		String query = "FROM Usuario as u";
 		return sessionFactory.getCurrentSession().createQuery(query).list();
+	}
+	public Usuario usuarioPorRut(String rut){
+		String query = "FROM Usuario as u where u.rut=:rut";
+		return (Usuario)sessionFactory.getCurrentSession().createQuery(query).setString("rut", rut).uniqueResult();
 	}
 }

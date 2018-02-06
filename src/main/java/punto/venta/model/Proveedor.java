@@ -17,6 +17,8 @@ public class Proveedor implements Serializable{
 	private String nombre;
 	private String rut;
 	private String razonSocial;
+	private String fono;
+	private String mail;
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id_proveedor", unique = true, nullable = false)
@@ -46,6 +48,20 @@ public class Proveedor implements Serializable{
 	}
 	public void setRazonSocial(String razonSocial) {
 		this.razonSocial = razonSocial;
+	}
+	@Column(name = "fono", length = 240)
+	public String getFono() {
+		return fono;
+	}
+	public void setFono(String fono) {
+		this.fono = fono;
+	}
+	@Column(name = "mail", length = 240)
+	public String getMail() {
+		return mail;
+	}
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 	
 	

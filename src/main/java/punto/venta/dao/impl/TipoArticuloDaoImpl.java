@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import punto.venta.dao.TipoArticuloDao;
 import punto.venta.model.TipoArticulo;
 
+@Repository("tipoArticuloDao")
 public class TipoArticuloDaoImpl implements TipoArticuloDao{
 	
 	@Autowired

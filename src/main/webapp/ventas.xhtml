@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+<h:head>
+	<title>Ventas</title>
+	<link rel="icon" type="image/png" href="imagenes/logo.png" />
+	<script src="js/fecha.js"> </script>
+
+</h:head>
+<body>
+	<p:breadCrumb style="font-size: 13px;">
+		<p:menuitem value="Vender" url="ventas.xhtml" />
+		<p:menuitem value="Ventas" url="ventas.xhtml" />
+		<p:menuitem value="Stock" url="stock.xhtml" />
+		<p:menuitem value="Codigos" url="barcode.xhtml" />
+		<p:menuitem value="Administrar" url="admin.xhtml" />
+	</p:breadCrumb>
+
+	<h:form id="ventasF">
+	<p:growl id="msgs" showDetail="true" />
+		<p:dataTable id="ventasT" var="ventas"
+			value="#{ventaBean.listaVentas()}"
+			style="font-size: 11px;padding-top: 6px;" rows="10" paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15,20,25">
+
+			<p:column headerText="Usuario" filterMatchMode="contains"
+				filterBy="#{ventas.usuario.rut}">
+				<h:outputText value="#{ventas.usuario.rut}" />
+			</p:column>
+			<p:column headerText="Fecha" filterMatchMode="contains"
+				filterBy="#{ventas.fecha}">
+				<h:outputText value="#{ventas.fecha}" />
+			</p:column>
+			<p:column headerText="Descuento" filterMatchMode="contains"
+				filterBy="#{ventas.descuento}">
+				<h:outputText value="#{ventaBean.tipoDescuento(ventas.tipoDescuento)} #{ventas.descuento}" />
+			</p:column>
+
+			<p:column style="width:24px" headerText="Detalles">
+				<p:commandButton value="Detalles" oncomplete="detalle.show()"
+					actionListener="#{ventaBean.cargaListaIngreso(ventas)}"
+					update=":detalleVentasF:detalleT" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+	<div
+		style="text-align: center; padding-top: 10px;  width: 100%">
+
+		<p:commandButton value="Vender" onclick="ventaNuevas.show()" style="text-align: center;  font-size: 18px; width: 100%"/>
+
+	</div>
+	<h:form id="detalleVentasF">
+		<p:dialog widgetVar="detalle" header="Nuevo Articulo"
+			modal="false" resizable="false" style="font-size: 13px;">
+			
+			<p:dataTable id="detalleT" var="det"
+				value="#{ventaBean.listaVentaArticuloAux2}"
+				style="font-size: 11px;padding-top: 6px;" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,25">
+
+				
+				<p:column headerText="Articulo" filterMatchMode="contains"
+					filterBy="#{det.articulo.articulo}">
+					<h:outputText value="#{det.articulo.articulo}" />
+				</p:column>
+					<p:column headerText="Codigo" >
+					<h:outputText value="#{det.articulo.codigo}" />
+				</p:column>
+				<p:column headerText="Marca" >
+					<h:outputText value="#{det.articulo.marca}" />
+				</p:column>
+				<p:column headerText="Unidades"  >
+					<h:outputText value="#{det.articulo.tipoUnidad.tipo} #{det.cantidad}" />
+				</p:column>
+				<p:column headerText="Precio" >
+					<h:outputText value="$ #{det.precio}" />
+				</p:column>
+				<p:column headerText="Total" >
+					<h:outputText value="$ #{det.precio*det.cantidad}" />
+				</p:column>
+
+
+			</p:dataTable>
+		</p:dialog>
+	</h:form>
+	
+		<h:form id="ventaNueva">
+		<p:dialog widgetVar="ventaNuevas" header="Venta"
+			modal="false" resizable="false" style="font-size: 13px;">
+			<h:panelGrid id="total" columns="2" cellpadding="5">
+
+				<h:outputText value="Total: " style="font-size: 40px;" />
+				<h:outputText value="$ #{ventaBean.totalVenta()}"
+					style="font-size: 40px;" />
+
+			</h:panelGrid>
+			<h:panelGrid columns="5" cellpadding="5">
+
+				<h:outputText value="Codigo : " />
+				<p:inputText value="#{ventaBean.codigoArticulo}" />
+				<h:outputText value=" Cantidad : " />
+				<p:inputText value="#{ventaBean.cantidad}" />
+				<p:commandButton  value="Agregar"
+							update=":ventaNueva:listaArticulos :ventaNueva:total :ventasF:msgs"
+							action="#{ventaBean.cargaListaArticulo()}" />
+			</h:panelGrid>
+			<p:dataTable id="listaArticulos"
+				value="#{ventaBean.listaVentaArticuloAux}" var="art"
+				type="ordered" style="display: inline-block;width:100%"
+				rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,25">
+				
+				<p:column headerText="Codigo">
+					<h:outputText value="#{art.articulo.codigo}" />
+				</p:column>
+				<p:column headerText="Articulo">
+					<h:outputText value="#{art.articulo.articulo}" />
+				</p:column>
+				<p:column headerText="Marca">
+					<h:outputText value="#{art.articulo.marca}" />
+				</p:column>
+				<p:column headerText="Unidades">
+					<h:outputText value="#{art.articulo.tipoUnidad.tipo} #{art.cantidad} " />
+				</p:column>
+				<p:column headerText="Valor">
+					<h:outputText value="$ #{art.precio}" />
+				</p:column>
+				<p:column headerText="Total">
+					<h:outputText value="$ #{art.precio*art.cantidad}" />
+				</p:column>
+
+				<p:column style="width:32px">
+					<p:commandLink value=" X "
+						update=":ventaNueva:listaArticulos :ventaNueva:total"
+						process=":ventaNueva:listaArticulos">
+						<p:collector value="#{art}"
+							removeFrom="#{ventaBean.listaVentaArticuloAux}"
+							unique="true" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+<!-- 			<h:panelGrid columns="3" cellpadding="5"> -->
+
+				
+<!-- 				<h:outputText value="Descuento: " /> -->
+<!-- 				<pe:inputNumber value="#{ventaBean.descuento}" -->
+<!-- 					decimalPlaces="0" /> -->
+<!-- 					<p:selectBooleanButton id="prestamo" -->
+<!-- 							value="#{ventaBean.tipoDescuento}" onLabel="%" -->
+<!-- 							offLabel="$" style="width:60px" /> -->
+<!-- 			</h:panelGrid> -->
+			<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+				<p:commandButton value="Guardar"
+					actionListener="#{ventaBean.venta()}"
+					update=":ventasF:ventasT"
+					oncomplete="ventaNuevas.hide()" />
+
+			</div>
+
+
+
+		</p:dialog>
+	</h:form>
+</body>
+</html>

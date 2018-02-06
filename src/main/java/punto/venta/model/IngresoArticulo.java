@@ -23,7 +23,6 @@ public class IngresoArticulo implements Serializable{
 	private Articulo articulo;
 	private Date fecha;
 	private Integer cantidad;
-	private TipoUnidad unidad;
 	private Integer valor;
 	private Integer costo;
 	private Usuario usuario;
@@ -58,14 +57,6 @@ public class IngresoArticulo implements Serializable{
 	}
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
-	}
-	@ManyToOne(cascade=CascadeType.MERGE)
-	@JoinColumn(name = "fk_unidad")
-	public TipoUnidad getUnidad() {
-		return unidad;
-	}
-	public void setUnidad(TipoUnidad unidad) {
-		this.unidad = unidad;
 	}
 	@Column(name = "valor_venta")
 	public Integer getValor() {

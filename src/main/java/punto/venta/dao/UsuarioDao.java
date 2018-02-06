@@ -10,4 +10,5 @@ public interface UsuarioDao {
 	Usuario buscarPorId(int id);
 	void borrar(Usuario usuario);
 	List<Usuario> lista();
+	Usuario usuarioPorRut(String rut);
 }

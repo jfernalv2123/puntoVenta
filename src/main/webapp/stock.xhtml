@@ -1,0 +1,397 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+<h:head>
+	<title>Stock</title>
+	<link rel="icon" type="image/png" href="imagenes/logo.png" />
+	<script src="js/fecha.js"> </script>
+
+</h:head>
+<body>
+	<p:breadCrumb style="font-size: 13px;">
+		<p:menuitem value="Vender" url="ventas.xhtml" />
+		<p:menuitem value="Ventas" url="ventas.xhtml" />
+		<p:menuitem value="Stock" url="stock.xhtml" />
+		<p:menuitem value="Codigos" url="barcode.xhtml" />
+		<p:menuitem value="Administrar" url="admin.xhtml" />
+	</p:breadCrumb>
+
+	<h:form id="articuloF">
+		<p:dataTable id="articuloT" var="art"
+			value="#{articuloBean.listaArticulos()}"
+			style="font-size: 11px;padding-top: 6px;" rows="10" paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15,20,25">
+
+			<p:column headerText="Codigo" filterMatchMode="contains"
+				filterBy="#{art.codigo}">
+				<h:outputText value="#{art.codigo}" />
+			</p:column>
+			<p:column headerText="Articulo" filterMatchMode="contains"
+				filterBy="#{art.articulo}">
+				<h:outputText value="#{art.articulo}" />
+			</p:column>
+			<p:column headerText="Marca" filterMatchMode="contains"
+				filterBy="#{art.marca}">
+				<h:outputText value="#{art.marca}" />
+			</p:column>
+			<p:column headerText="Tipo" filterMatchMode="contains"
+				filterBy="#{art.tipo.tipo}">
+				<h:outputText value="#{art.tipo.tipo}" />
+			</p:column>
+			<p:column headerText="Proveedor" filterMatchMode="contains"
+				filterBy="#{art.proveedor.nombre}">
+				<h:outputText value="#{art.proveedor.nombre}" />
+			</p:column>
+			<p:column headerText="Stock" filterMatchMode="contains">
+				<h:outputText value="#{ingresoArticuloBean.stockArticulo(art)}" />
+			</p:column>
+			<p:column style="width:24px" headerText="Modificar">
+				<p:commandButton value="Modificar" oncomplete="modArticulo.show()"
+					actionListener="#{articuloBean.cargaArticulo(art)}"
+					update=":articuloMod:modArt" />
+			</p:column>
+			<p:column style="width:24px" headerText="Borrar">
+				<p:commandButton value="Borrar"
+					actionListener="#{articuloBean.borrar(art)}"
+					update=":articuloF:articuloT :articuloNuevo:msgs3" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+	<div
+		style="text-align: center; padding-top: 10px; font-size: 13px; width: 100%">
+		<h:panelGrid columns="4" cellpadding="5">
+
+			<p:commandButton value="Nuevo Articulo"
+				onclick="nuevoArticulo.show()" />
+			<p:commandButton value="Nuevo Ingreso"
+				onclick="ingresoArticulo.show()" />
+			<p:commandButton value="Ver Ingreso" onclick="verIngresos.show()" />
+			<p:commandButton value="Ver Detalle Ventas"
+				onclick="detalleVentasDialog.show()" />
+
+		</h:panelGrid>
+	</div>
+	<h:form id="articuloNuevo">
+		<p:dialog widgetVar="nuevoArticulo" header="Nuevo Articulo"
+			modal="false" resizable="false" style="font-size: 13px;">
+
+			<p:growl id="msgs3" showDetail="true" />
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<h:outputText value="Articulo : " />
+				<p:inputText value="#{articuloBean.articulo}" />
+				<h:outputText value=" Codigo : " />
+				<p:inputText value="#{articuloBean.codigo}" />
+				<h:outputText value=" Marca : " />
+				<p:inputText value="#{articuloBean.marca}" />
+								<h:outputText value=" tipo : " />
+								<p:selectOneMenu value="#{articuloBean.idTipo}" label="origen">
+									<f:selectItems value="#{tiposBean.comboTipoArticulo()}"
+										var="tipos" />
+								</p:selectOneMenu>
+								<h:outputText value=" Unidad : " />
+								<p:selectOneMenu value="#{articuloBean.idTipoUnidad}" label="origen">
+									<f:selectItems value="#{tiposBean.comboTipoUnidad()}"
+										var="unidades" />
+								</p:selectOneMenu>
+								<h:outputText value=" Proveedor : " />
+								<p:selectOneMenu value="#{articuloBean.idProveedor}" label="origen">
+									<f:selectItems value="#{proveedorBean.combo()}" var="proveedores" />
+								</p:selectOneMenu>
+
+			</h:panelGrid>
+			<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+				<p:commandButton value="Guardar"
+					actionListener="#{articuloBean.guardar()}"
+					update=":articuloF:articuloT :articuloNuevo:msgs3"
+					oncomplete="nuevoArticulo.hide()" />
+
+			</div>
+
+
+
+		</p:dialog>
+	</h:form>
+
+	<h:form id="articuloMod">
+		<p:dialog widgetVar="modArticulo" header="Modificar Articulo"
+			modal="false" resizable="false" style="font-size: 13px;">
+
+
+			<h:panelGrid id="modArt" columns="2" cellpadding="5">
+
+				<h:outputText value="Articulo : " />
+				<p:inputText value="#{articuloBean.articuloAux.articulo}" />
+				<h:outputText value=" Codigo : " />
+				<p:inputText value="#{articuloBean.articuloAux.codigo}" />
+				<h:outputText value=" Marca : " />
+				<p:inputText value="#{articuloBean.articuloAux.marca}" />
+				<h:outputText value=" tipo : " />
+				<p:selectOneMenu value="#{articuloBean.articuloAux.tipo.id}"
+					label="tipoMArt">
+					<f:selectItems value="#{tiposBean.comboTipoArticulo()}"
+						var="tiposMA" />
+				</p:selectOneMenu>
+				<h:outputText value="Unidad: " />
+				<p:selectOneMenu value="#{articuloBean.articuloAux.tipoUnidad.id}"
+					label="tipoUni">
+					<f:selectItems value="#{tiposBean.comboTipoUnidad()}"
+						var="unidadesMod" />
+				</p:selectOneMenu>
+				<h:outputText value=" Proveedor : " />
+				<p:selectOneMenu value="#{articuloBean.articuloAux.proveedor.id}"
+					label="proveedoresMod">
+					<f:selectItems value="#{proveedorBean.combo()}" var="provMod" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+				<p:commandButton value="Guardar"
+					actionListener="#{articuloBean.modificarArticulo()}"
+					update=":articuloF:articuloT :articuloNuevo:msgs3"
+					oncomplete="modArticulo.hide()" />
+
+			</div>
+
+
+		</p:dialog>
+	</h:form>
+
+	<!-- 	FIN ARTICULO -->
+	<h:form id="ingresoArticuloMod">
+		<p:dialog widgetVar="ingresoArticulo" header="Ingreso Articulos"
+			modal="false" resizable="false" style="font-size: 13px;">
+
+			<h:panelGrid columns="6" cellpadding="4">
+
+				<h:outputText value="Codigo: " />
+				<p:inputText value="#{ingresoArticuloBean.codigo}" />
+
+				<h:outputText value="Cantidad: " />
+				<pe:inputNumber value="#{ingresoArticuloBean.cantidad}"
+					decimalPlaces="0" />
+
+
+				<h:outputText value="Valor: " />
+				<pe:inputNumber value="#{ingresoArticuloBean.valor}"
+					decimalPlaces="0" />
+				<h:outputText value="Costo: " />
+				<pe:inputNumber value="#{ingresoArticuloBean.costo}"
+					decimalPlaces="0" />
+
+				<p:commandButton value="Agregar"
+					update=":ingresoArticuloMod:listaArticulos"
+					action="#{ingresoArticuloBean.agregarArticulo()}" />
+			</h:panelGrid>
+
+			<p:dataTable id="listaArticulos"
+				value="#{ingresoArticuloBean.listaIngresoArticuloAux}" var="art"
+				type="ordered" style="display: inline-block;width:100%" rows="10"
+				paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,25">
+				<p:column headerText="Codigo">
+					<h:outputText value="#{art.articulo.codigo}" />
+				</p:column>
+				<p:column headerText="Articulo">
+					<h:outputText value="#{art.articulo.articulo}" />
+				</p:column>
+				<p:column headerText="Marca">
+					<h:outputText value="#{art.articulo.marca}" />
+				</p:column>
+				<p:column headerText="Tipo">
+					<h:outputText value="#{art.cantidad} #{art.articulo.tipo.tipo}" />
+				</p:column>
+				<p:column headerText="Valor">
+					<h:outputText value="$ #{art.valor}" />
+				</p:column>
+				<p:column headerText="Costo">
+					<h:outputText value="$ #{art.costo}" />
+				</p:column>
+
+				<p:column style="width:32px">
+					<p:commandLink value=" X "
+						update=":ingresoArticuloMod:listaArticulos"
+						process=":ingresoArticuloMod:listaArticulos">
+						<p:collector value="#{art}"
+							removeFrom="#{ingresoArticuloBean.listaIngresoArticuloAux}"
+							unique="true" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+				<p:commandButton value="Guardar"
+					actionListener="#{ingresoArticuloBean.guardarArticulo()}"
+					update=":articuloF:articuloT :articuloNuevo:msgs3"
+					oncomplete="ingresoArticulo.hide()" />
+
+			</div>
+
+
+		</p:dialog>
+	</h:form>
+	<!-- INICIO VER INGRESOS -->
+
+	<h:form id="ingresosVer">
+		<p:dialog widgetVar="verIngresos" header="Ingresos" modal="false"
+			resizable="false" style="font-size: 13px;">
+
+
+			<p:dataTable id="ingresosVer" var="ing"
+				value="#{ingresoArticuloBean.listaIngresos()}"
+				style="font-size: 11px;padding-top: 6px;" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,25,30,35,40,50">
+
+				<p:column headerText="Codigo" filterMatchMode="contains"
+					filterBy="#{ing.articulo.codigo}">
+					<h:outputText value="#{ing.articulo.codigo}" />
+				</p:column>
+				<p:column headerText="Articulo" filterMatchMode="contains"
+					filterBy="#{ing.articulo.articulo}">
+					<h:outputText value="#{ing.articulo.articulo}" />
+				</p:column>
+				<p:column headerText="Marca" filterMatchMode="contains"
+					filterBy="#{ing.articulo.marca}">
+					<h:outputText value="#{ing.articulo.marca}" />
+				</p:column>
+				<p:column headerText="Cantidad" filterMatchMode="contains"
+					filterBy="#{ing.cantidad}">
+					<h:outputText value="#{ing.cantidad}" />
+				</p:column>
+				<p:column headerText="Valor" filterMatchMode="contains"
+					filterBy="#{ing.valor}">
+					<h:outputText value="#{ing.valor}" />
+				</p:column>
+				<p:column headerText="Costo" filterMatchMode="contains"
+					filterBy="#{ing.costo}">
+					<h:outputText value="#{ing.costo}" />
+				</p:column>
+				<p:column headerText="Fecha" filterMatchMode="contains"
+					filterBy="#{ing.fecha}">
+					<h:outputText value="#{ing.fecha}" />
+				</p:column>
+				<p:column headerText="Usuario" filterMatchMode="contains"
+					filterBy="#{ing.usuario.nombre} #{ing.usuario.apellido}">
+					<h:outputText value="#{ing.usuario.nombre}" />
+				</p:column>
+				<p:column style="width:24px" headerText="Modificar">
+					<p:commandButton value="Modificar"
+						oncomplete="modificaIngreso.show()"
+						actionListener="#{ingresoArticuloBean.cargaIngreso(ing)}"
+						update=":modIngreso:ingresoDialog" />
+				</p:column>
+				<p:column style="width:24px" headerText="Borrar">
+					<p:commandButton value="Borrar"
+						actionListener="#{ingresoArticuloBean.borrarIngreso(ing)}"
+						update=":ingresosVer:ingresosVer :articuloF:articuloT :articuloNuevo:msgs3" />
+				</p:column>
+
+			</p:dataTable>
+
+
+
+		</p:dialog>
+	</h:form>
+
+	<h:form id="modIngreso">
+		<p:dialog id="ingresoDialog" widgetVar="modificaIngreso"
+			header="#{ingresoArticuloBean.ingresoArticuloAux.articulo.articulo}"
+			modal="false" resizable="false" style="font-size: 13px;">
+
+
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<h:outputText value="Cantidad : " />
+				<p:inputText
+					value="#{ingresoArticuloBean.ingresoArticuloAux.cantidad}" />
+				<h:outputText value=" Costo : " />
+				<p:inputText value="#{ingresoArticuloBean.ingresoArticuloAux.costo}" />
+				<h:outputText value=" Valor : " />
+				<p:inputText value="#{ingresoArticuloBean.ingresoArticuloAux.valor}" />
+				<h:outputText value="Fecha : " />
+				<p:calendar value="#{ingresoArticuloBean.ingresoArticuloAux.fecha}" />
+
+
+			</h:panelGrid>
+			<div style="text-align: center; padding-top: 10px; font-size: 13px;">
+				<p:commandButton value="Guardar"
+					actionListener="#{ingresoArticuloBean.modificarIngreso()}"
+					update=":ingresosVer:ingresosVer :articuloF:articuloT :articuloNuevo:msgs3"
+					oncomplete="modificaIngreso.hide()" />
+
+			</div>
+
+
+
+		</p:dialog>
+	</h:form>
+
+
+	<h:form id="detalleVentas">
+		<p:dialog id="ingresoDialog" widgetVar="detalleVentasDialog"
+			header="Detalle ventas" modal="false" resizable="false"
+			style="font-size: 13px;">
+
+
+			<h:panelGrid columns="5" cellpadding="5">
+
+				<h:outputText value="Fecha Desde: " />
+				<p:calendar value="#{ventaBean.desde}" />
+				<h:outputText value=" Hasta : " />
+				<p:calendar value="#{ventaBean.hasta}" />
+				<p:commandButton value="Buscar"
+					actionListener="#{ventaBean.cargaListaPorFecha()}"
+					update=":detalleVentas:detalleDeVentas" />
+
+
+			</h:panelGrid>
+			<p:dataTable id="detalleDeVentas" var="ve"
+				value="#{ventaBean.listaVentaArticuloAux}"
+				style="font-size: 11px;padding-top: 6px;" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20,25,30,35,40,50">
+
+				<p:column headerText="Codigo">
+					<h:outputText value="#{ve.articulo.codigo}" />
+				</p:column>
+				<p:column headerText="Articulo">
+					<h:outputText value="#{ve.articulo.articulo}" />
+				</p:column>
+				<p:column headerText="Marca">
+					<h:outputText value="#{ve.articulo.marca}" />
+				</p:column>
+				<p:column headerText="Proveedor">
+					<h:outputText value="#{ve.articulo.proveedor.nombre}" />
+				</p:column>
+				<p:column headerText="Cantidad">
+					<h:outputText value="#{ve.articulo.tipoUnidad.tipo} #{ve.cantidad}" />
+				</p:column>
+				<p:column headerText="Precio de Venta">
+					<h:outputText value="$ #{ve.precio}" />
+				</p:column>
+				<p:column headerText="Fecha">
+					<h:outputText value="#{ve.venta.fecha}" />
+				</p:column>
+				<f:facet name="footer">
+					<h:outputText style="font-size: 18px;"
+						value="Total ventas $ #{ventaBean.total}" />
+
+				</f:facet>
+			</p:dataTable>
+
+
+
+		</p:dialog>
+	</h:form>
+</body>
+</html>
