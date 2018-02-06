@@ -227,6 +227,7 @@ public class VentaBean {
 	}
 	public void cargaListaPorFecha(){
 		listaVentaArticuloAux=ventaArticuloService.listaPorFechas(getDesde(), getHasta());
+		this.total=0;
 		for(VentaArticulo ve:listaVentaArticuloAux){
 			this.total+=ve.getPrecio();
 		}

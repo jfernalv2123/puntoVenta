@@ -137,22 +137,22 @@
 				<h:outputText value=" Marca : " />
 				<p:inputText value="#{articuloBean.articuloAux.marca}" />
 				<h:outputText value=" tipo : " />
-				<p:selectOneMenu value="#{articuloBean.articuloAux.tipo.id}"
-					label="tipoMArt">
-					<f:selectItems value="#{tiposBean.comboTipoArticulo()}"
-						var="tiposMA" />
-				</p:selectOneMenu>
-				<h:outputText value="Unidad: " />
-				<p:selectOneMenu value="#{articuloBean.articuloAux.tipoUnidad.id}"
-					label="tipoUni">
-					<f:selectItems value="#{tiposBean.comboTipoUnidad()}"
-						var="unidadesMod" />
-				</p:selectOneMenu>
-				<h:outputText value=" Proveedor : " />
-				<p:selectOneMenu value="#{articuloBean.articuloAux.proveedor.id}"
-					label="proveedoresMod">
-					<f:selectItems value="#{proveedorBean.combo()}" var="provMod" />
-				</p:selectOneMenu>
+<!-- 				<p:selectOneMenu value="#{articuloBean.articuloAux.tipo.id}" -->
+<!-- 					label="tipoMArt"> -->
+<!-- 					<f:selectItems value="#{tiposBean.comboTipoArticulo()}" -->
+<!-- 						var="tiposMA" /> -->
+<!-- 				</p:selectOneMenu> -->
+<!-- 				<h:outputText value="Unidad: " /> -->
+<!-- 				<p:selectOneMenu value="#{articuloBean.articuloAux.tipoUnidad.id}" -->
+<!-- 					label="tipoUni"> -->
+<!-- 					<f:selectItems value="#{tiposBean.comboTipoUnidad()}" -->
+<!-- 						var="unidadesMod" /> -->
+<!-- 				</p:selectOneMenu> -->
+<!-- 				<h:outputText value=" Proveedor : " /> -->
+<!-- 				<p:selectOneMenu value="#{articuloBean.articuloAux.proveedor.id}" -->
+<!-- 					label="proveedoresMod"> -->
+<!-- 					<f:selectItems value="#{proveedorBean.combo()}" var="provMod" /> -->
+<!-- 				</p:selectOneMenu> -->
 			</h:panelGrid>
 			<div style="text-align: center; padding-top: 10px; font-size: 13px;">
 				<p:commandButton value="Guardar"
@@ -319,7 +319,7 @@
 				<h:outputText value=" Valor : " />
 				<p:inputText value="#{ingresoArticuloBean.ingresoArticuloAux.valor}" />
 				<h:outputText value="Fecha : " />
-				<p:calendar value="#{ingresoArticuloBean.ingresoArticuloAux.fecha}" />
+				<p:calendar value="#{ingresoArticuloBean.ingresoArticuloAux.fecha}" locale="es"/>
 
 
 			</h:panelGrid>
@@ -346,9 +346,9 @@
 			<h:panelGrid columns="5" cellpadding="5">
 
 				<h:outputText value="Fecha Desde: " />
-				<p:calendar value="#{ventaBean.desde}" />
+				<p:calendar value="#{ventaBean.desde}" locale="es"/>
 				<h:outputText value=" Hasta : " />
-				<p:calendar value="#{ventaBean.hasta}" />
+				<p:calendar value="#{ventaBean.hasta}" locale="es" />
 				<p:commandButton value="Buscar"
 					actionListener="#{ventaBean.cargaListaPorFecha()}"
 					update=":detalleVentas:detalleDeVentas" />
