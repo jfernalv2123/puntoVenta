@@ -1,3 +1,3 @@
-# Sistema gestion de bodega municipal
+# Sistema de ventas para pequeños comercios 
 
-  	proyecto realizado a medida para la municipalidad de Pto Saavedra 
+  	proyecto realizado en tiempos libres 

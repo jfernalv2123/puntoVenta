@@ -49,6 +49,7 @@ public class VentaBean {
 	private Date hasta;
 	private List<VentaArticulo> listaVentaArticuloAux=new ArrayList<VentaArticulo>();
 	private List<VentaArticulo> listaVentaArticuloAux2=new ArrayList<VentaArticulo>();
+	private List<VentaArticulo> listaVentaArticuloAux3=new ArrayList<VentaArticulo>();
 	private Integer total=0;
 	
 	public ArticuloService getArticuloService() {
@@ -144,6 +145,13 @@ public class VentaBean {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
+	
+	public List<VentaArticulo> getListaVentaArticuloAux3() {
+		return listaVentaArticuloAux3;
+	}
+	public void setListaVentaArticuloAux3(List<VentaArticulo> listaVentaArticuloAux3) {
+		this.listaVentaArticuloAux3 = listaVentaArticuloAux3;
+	}
 	public void cargaListaArticulo(){
 		VentaArticulo ventaArticulo=new VentaArticulo();
 		Articulo art=articuloService.buscarPorCodigo(getCodigoArticulo());
@@ -226,9 +234,9 @@ public class VentaBean {
 		context.addMessage(null, new FacesMessage(titulo, mensaje));
 	}
 	public void cargaListaPorFecha(){
-		listaVentaArticuloAux=ventaArticuloService.listaPorFechas(getDesde(), getHasta());
+		listaVentaArticuloAux3=ventaArticuloService.listaPorFechas(getDesde(), getHasta());
 		this.total=0;
-		for(VentaArticulo ve:listaVentaArticuloAux){
+		for(VentaArticulo ve:listaVentaArticuloAux3){
 			this.total+=ve.getPrecio();
 		}
 	}
