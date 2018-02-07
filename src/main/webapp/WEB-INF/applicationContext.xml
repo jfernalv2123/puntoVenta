@@ -11,7 +11,7 @@
   
  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
     <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="url" value="jdbc:mysql://juaco.ddns.net:3306/punto_venta" />
+    <property name="url" value="jdbc:mysql://127.0.0.1:3306/punto_venta" />
     <property name="username" value="root" />
     <property name="password" value="qwerty2123:" />
   </bean>
