@@ -16,13 +16,13 @@
 </h:head>
 <body>
 	<p:breadCrumb style="font-size: 13px;">
-		<p:menuitem value="Vender" url="ventas.xhtml" />
-		<p:menuitem value="Ventas" url="ventas.xhtml" />
+		<p:menuitem value="Vender" url="index.xhtml" />
+		<p:menuitem value="Ventas" url="ventas.xhtml"  rendered="#{usuarioBean.session}"/>
 		<p:menuitem value="Stock" url="stock.xhtml" />
-		<p:menuitem value="Codigos" url="barcode.xhtml" />
-		<p:menuitem value="Administrar" url="admin.xhtml" />
+		<p:menuitem value="Codigos" url="barcode.xhtml" rendered="#{usuarioBean.session}" />
+		<p:menuitem value="Administrar" url="admin.xhtml" rendered="#{usuarioBean.session}" style="color: red;"/>
 	</p:breadCrumb>
-	<p:panel id="proveedorPanel" header="proveedores" toggleable="true"
+	<p:panel id="proveedorPanel" header="proveedores" toggleable="true"  rendered="#{usuarioBean.session}"
 		toggleSpeed="500" widgetVar="panelBus" collapsed="true"
 		style="margin-bottom:1px;margin-top:15px">
 		<h:form id="proveedorF">
@@ -128,7 +128,7 @@
 		</h:form>
 	</p:panel>
 	<!-- 	INICIO TIPO ARTICULO -->
-	<p:panel id="tipoArticuloPanel" header="tipo Articulo"
+	<p:panel id="tipoArticuloPanel" header="tipo Articulo" rendered="#{usuarioBean.session}"
 		toggleable="true" toggleSpeed="500" widgetVar="panelTipoArticulo"
 		collapsed="true" style="margin-bottom:1px;margin-top:15px">
 		<h:form id="tipoArticuloF">
@@ -208,7 +208,7 @@
 	</p:panel>
 	<!-- 	FIN TIPO ARTICULO -->
 	<!-- 	INICIO TIPO UNIDAD -->
-	<p:panel id="tipoUnidadPanel" header="tipo Unidad" toggleable="true"
+	<p:panel id="tipoUnidadPanel" header="tipo Unidad" toggleable="true" rendered="#{usuarioBean.session}"
 		toggleSpeed="500" widgetVar="panelTipoUnidad" collapsed="true"
 		style="margin-bottom:1px;margin-top:15px">
 		<h:form id="tipoUnidadF">
@@ -287,7 +287,7 @@
 	</p:panel>
 	<!-- 	FIN TIPO UNIDAD -->
 	<!-- 	INICIO USUARIO -->
-	<p:panel id="usuarioPanel" header="Usuario" toggleable="true"
+	<p:panel id="usuarioPanel" header="Usuario" toggleable="true" rendered="#{usuarioBean.session}"
 		toggleSpeed="500" widgetVar="panelUsuario" collapsed="true"
 		style="margin-bottom:1px;margin-top:15px">
 		<h:form id="usuarioF">

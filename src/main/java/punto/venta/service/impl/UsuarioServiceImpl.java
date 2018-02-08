@@ -95,10 +95,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Transactional
 	public boolean compruebaPass(String rut, String pass){
 		boolean salida=false;
-		Usuario user=usuarioDao.usuarioPorRut(rut);
-		if(user.getPass().equals(encripta(pass,Constantes.MD5))){
-			salida=true;
+		
+		try {
+			Usuario user=usuarioDao.usuarioPorRut(rut);
+			if(user.getPass().equals(encripta(pass,Constantes.MD5))){
+				salida=true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+		
+			
+		
+	
 		return salida;
 	}
 	@Transactional

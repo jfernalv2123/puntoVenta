@@ -13,11 +13,11 @@
 
 <body>
 <p:breadCrumb style="font-size: 13px;">
-		<p:menuitem value="Vender" url="ventas.xhtml" />
-		<p:menuitem value="Ventas" url="ventas.xhtml" />
-		<p:menuitem value="Stock" url="stock.xhtml" />
-		<p:menuitem value="Codigos" url="barcode.xhtml" />
-		<p:menuitem value="Administrar" url="admin.xhtml" />
+		<p:menuitem value="Vender" url="index.xhtml" />
+		<p:menuitem value="Ventas" url="ventas.xhtml" rendered="#{usuarioBean.session}" />
+		<p:menuitem value="Stock" url="stock.xhtml"  />
+		<p:menuitem value="Codigos" url="barcode.xhtml"  style="color: red;"/>
+		<p:menuitem value="Administrar" url="admin.xhtml" rendered="#{usuarioBean.session}" />
 	</p:breadCrumb>		
 
 

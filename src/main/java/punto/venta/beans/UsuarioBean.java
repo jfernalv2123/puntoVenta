@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-
 import punto.venta.constantes.Constantes;
 import punto.venta.model.Usuario;
 import punto.venta.service.UsuarioService;
@@ -31,7 +30,16 @@ public class UsuarioBean {
 	private String apellido2;
 	private String pass;
 	private Integer nivel;
+	private boolean session;
+	private String mensaje=Constantes.VACIO;
+	
 
+	public boolean isSession() {
+		return session;
+	}
+	public void setSession(boolean session) {
+		this.session = session;
+	}
 	public Usuario getUsuarioAux() {
 		return usuarioAux;
 	}
@@ -83,6 +91,13 @@ public class UsuarioBean {
 	public void carga(Usuario user){
 		usuarioAux=user;
 	}
+	
+	public String getMensaje() {
+		return mensaje;
+	}
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
 	public void guardar(){
 		Usuario user =new Usuario();
 		user.setRut(getRut());
@@ -94,6 +109,27 @@ public class UsuarioBean {
 		user.setPass(usuarioService.encripta(getPass(), Constantes.MD5) );
 		usuarioService.guardar(user);
 		mensaje(Constantes.GUARDADO,user.getNombre()+Constantes.ESPACIO+user.getApellido());
+	}
+	
+
+	public String login() {
+		String redireccion = "";
+		boolean valida = false;
+		if (!getRut().equals(Constantes.VACIO)) {
+			Usuario u = usuarioService.usuarioPorRut(getRut());
+			valida = usuarioService.compruebaPass(getRut(), getPass());
+			if (valida) {
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("u", u);
+				redireccion = "ventas?faces-redirect=true";
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Usuario o contraseña no valida"));
+				redireccion = "index?faces-redirect=true";
+				mensaje("Error", "Usuario o contraseña no valido");
+				setMensaje("Error : usuario o contraseña no valida");
+			}
+			session = valida;
+		}
+		return redireccion;
 	}
 	public void modificar(){
 		usuarioService.actualizar(usuarioAux);

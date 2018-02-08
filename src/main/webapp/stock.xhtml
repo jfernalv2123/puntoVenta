@@ -17,11 +17,11 @@
 </h:head>
 <body>
 	<p:breadCrumb style="font-size: 13px;">
-		<p:menuitem value="Vender" url="ventas.xhtml" />
-		<p:menuitem value="Ventas" url="ventas.xhtml" />
-		<p:menuitem value="Stock" url="stock.xhtml" />
+		<p:menuitem value="Vender" url="index.xhtml" />
+		<p:menuitem value="Ventas" url="ventas.xhtml"  rendered="#{usuarioBean.session}"/>
+		<p:menuitem value="Stock" url="stock.xhtml" style="color: red;"/>
 		<p:menuitem value="Codigos" url="barcode.xhtml" />
-		<p:menuitem value="Administrar" url="admin.xhtml" />
+		<p:menuitem value="Administrar" url="admin.xhtml"  rendered="#{usuarioBean.session}"/>
 	</p:breadCrumb>
 
 	<h:form id="articuloF">
@@ -54,12 +54,12 @@
 			<p:column headerText="Stock" filterMatchMode="contains">
 				<h:outputText value="#{ingresoArticuloBean.stockArticulo(art)}" />
 			</p:column>
-			<p:column style="width:24px" headerText="Modificar">
+			<p:column style="width:24px" headerText="Modificar"  rendered="#{usuarioBean.session}">
 				<p:commandButton value="Modificar" oncomplete="modArticulo.show()"
 					actionListener="#{articuloBean.cargaArticulo(art)}"
 					update=":articuloMod:modArt" />
 			</p:column>
-			<p:column style="width:24px" headerText="Borrar">
+			<p:column style="width:24px" headerText="Borrar"  rendered="#{usuarioBean.session}">
 				<p:commandButton value="Borrar"
 					actionListener="#{articuloBean.borrar(art)}"
 					update=":articuloF:articuloT :articuloNuevo:msgs3" />
@@ -69,9 +69,9 @@
 	</h:form>
 	<div
 		style="text-align: center; padding-top: 10px; font-size: 13px; width: 100%">
-		<h:panelGrid columns="4" cellpadding="5">
+		<h:panelGrid columns="4" cellpadding="5"  rendered="#{usuarioBean.session}">
 
-			<p:commandButton value="Nuevo Articulo"
+			<p:commandButton value="Nuevo Articulo" 
 				onclick="nuevoArticulo.show()" />
 			<p:commandButton value="Nuevo Ingreso"
 				onclick="ingresoArticulo.show()" />
@@ -136,7 +136,7 @@
 				<p:inputText value="#{articuloBean.articuloAux.codigo}" />
 				<h:outputText value=" Marca : " />
 				<p:inputText value="#{articuloBean.articuloAux.marca}" />
-				<h:outputText value=" tipo : " />
+<!-- 				<h:outputText value=" tipo : " /> -->
 <!-- 				<p:selectOneMenu value="#{articuloBean.articuloAux.tipo.id}" -->
 <!-- 					label="tipoMArt"> -->
 <!-- 					<f:selectItems value="#{tiposBean.comboTipoArticulo()}" -->

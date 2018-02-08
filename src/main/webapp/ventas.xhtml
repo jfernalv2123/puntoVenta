@@ -17,11 +17,11 @@
 </h:head>
 <body>
 	<p:breadCrumb style="font-size: 13px;">
-		<p:menuitem value="Vender" url="ventas.xhtml" />
-		<p:menuitem value="Ventas" url="ventas.xhtml" />
-		<p:menuitem value="Stock" url="stock.xhtml" />
-		<p:menuitem value="Codigos" url="barcode.xhtml" />
-		<p:menuitem value="Administrar" url="admin.xhtml" />
+		<p:menuitem value="Vender" url="index.xhtml" />
+		<p:menuitem value="Ventas" url="ventas.xhtml"  rendered="#{usuarioBean.session}" style="color: red;"/>
+		<p:menuitem value="Stock" url="stock.xhtml"  />
+		<p:menuitem value="Codigos" url="barcode.xhtml"  />
+		<p:menuitem value="Administrar" url="admin.xhtml"  rendered="#{usuarioBean.session}"/>
 	</p:breadCrumb>
 
 	<h:form id="ventasF">
@@ -56,14 +56,14 @@
 	<div
 		style="text-align: center; padding-top: 10px;  width: 100%">
 
-		<p:commandButton value="Vender" onclick="ventaNuevas.show()" style="text-align: center;  font-size: 18px; width: 100%"/>
+		<p:commandButton value="Vender" onclick="ventaNuevas.show()" style="text-align: center;  font-size: 18px; width: 100%"  rendered="#{usuarioBean.session}"/>
 
 	</div>
 	<h:form id="detalleVentasF">
 		<p:dialog widgetVar="detalle" header="Nuevo Articulo"
 			modal="false" resizable="false" style="font-size: 13px;">
 			
-			<p:dataTable id="detalleT" var="det"
+			<p:dataTable id="detalleT" var="det"  rendered="#{usuarioBean.session}"
 				value="#{ventaBean.listaVentaArticuloAux2}"
 				style="font-size: 11px;padding-top: 6px;" rows="10" paginator="true"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -96,7 +96,7 @@
 	</h:form>
 	
 		<h:form id="ventaNueva">
-		<p:dialog widgetVar="ventaNuevas" header="Venta"
+		<p:dialog widgetVar="ventaNuevas" header="Venta"  rendered="#{usuarioBean.session}"
 			modal="false" resizable="false" style="font-size: 13px;">
 			<h:panelGrid id="total" columns="2" cellpadding="5">
 

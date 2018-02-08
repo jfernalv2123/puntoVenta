@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+
+<h:head>
+	<title>Bienvenido</title>
+	<link rel="icon" type="image/png" href="imagenes/logo.png" />
+	<script src="js/fecha.js"> </script>
+
+</h:head>
+<body style="background-color: powderblue;"> 
+<div style="text-align: center; padding-top:15%; padding-left:40%; font-size: 13px;">
+
+<h:form id="loginForm">
+ 
+       
+     <p:panel id="basic" header="Login"   style="width:300px" >
+       <h:panelGrid columns="2" cellpadding="2" >
+					<h:outputText value="Rut : " />
+					<p:inputText value="#{usuarioBean.rut}" maxlength="8">
+					
+					 <pe:keyFilter regEx="/[\d]/"/>
+					</p:inputText>
+					
+					<h:outputText value="Pass : " />
+					<p:password value="#{usuarioBean.pass}" />
+			
+				</h:panelGrid>
+				<p:commandButton value="Aceptar"
+						action="#{usuarioBean.login()}"
+						/>
+						<br />
+						<h:outputText value="#{usuarioBean.mensaje}" style="color: red;"/>
+						
+				 </p:panel>
+				</h:form>
+
+			</div>
+</body> 
+</html>
