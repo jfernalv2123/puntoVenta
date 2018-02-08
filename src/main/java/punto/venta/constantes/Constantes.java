@@ -15,4 +15,6 @@ public static String VACIO="";
 public static String PORCENTAGE="%";
 public static String SIGNOPESO="$";
 public static String STOCK_INSUFICIENTE="Stock Insuficiente";
+public static String ERROR="ERROR";
+public static String NOESIGUAL="No son iguales";
 }

@@ -191,7 +191,8 @@ public class IngresoArticuloBean {
 			ingArt.setCosto(getCosto());
 			ingArt.setValor(getValor());
 			ingArt.setFecha(fechaActual);
-			ingArt.setUsuario(usuarioService.buscarPorId(1));
+			Usuario user=(Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("u");
+			ingArt.setUsuario(user);
 			for(IngresoArticulo in:listaIngresoArticuloAux){
 				if(in.getArticulo().getCodigo().equals(getCodigo())){
 					tiene=true;

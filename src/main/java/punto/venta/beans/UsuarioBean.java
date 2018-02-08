@@ -29,11 +29,18 @@ public class UsuarioBean {
 	private String apellido;
 	private String apellido2;
 	private String pass;
+	private String passAntiguo;
 	private Integer nivel;
 	private boolean session;
 	private String mensaje=Constantes.VACIO;
 	
 
+	public String getPassAntiguo() {
+		return passAntiguo;
+	}
+	public void setPassAntiguo(String passAntiguo) {
+		this.passAntiguo = passAntiguo;
+	}
 	public boolean isSession() {
 		return session;
 	}
@@ -129,11 +136,23 @@ public class UsuarioBean {
 			}
 			session = valida;
 		}
+		setRut(Constantes.VACIO);
+		setPass(Constantes.VACIO);
 		return redireccion;
 	}
 	public void modificar(){
-		usuarioService.actualizar(usuarioAux);
-		mensaje(Constantes.MODIFICADO,usuarioAux.getNombre()+Constantes.ESPACIO+usuarioAux.getApellido());
+		String pass=usuarioService.encripta(getPass(), Constantes.MD5);
+		String passAnt=usuarioService.encripta(getPassAntiguo(), Constantes.MD5);
+		if(usuarioAux.getPass().equals(passAnt)){
+			usuarioAux.setPass(pass);
+			usuarioService.actualizar(usuarioAux);
+			mensaje(Constantes.MODIFICADO,usuarioAux.getNombre()+Constantes.ESPACIO+usuarioAux.getApellido());
+		}else{
+			mensaje(Constantes.ERROR,Constantes.NOESIGUAL);
+		}
+		setPass(Constantes.VACIO);
+		setPassAntiguo(Constantes.VACIO);
+		
 	}
 	public void borrar(Usuario usuario){
 		usuarioService.borrar(usuario);

@@ -198,7 +198,8 @@ public class VentaBean {
 		venta.setDescuento(0);
 		venta.setFecha(fecha);
 		venta.setTipoDescuento(false);
-		venta.setUsuario(usuarioService.buscarPorId(1));
+		Usuario user=(Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("u");
+		venta.setUsuario(user);
 		if(listaVentaArticuloAux.size()>0){
 			ventaService.guardar(venta);
 			for(VentaArticulo ven:listaVentaArticuloAux){

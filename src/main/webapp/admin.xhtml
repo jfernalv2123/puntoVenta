@@ -338,7 +338,9 @@
 
 				<h:panelGrid columns="2" cellpadding="5">
 					<h:outputText value="Rut : " />
-					<p:inputText value="#{usuarioBean.rut}" />
+					<p:inputText value="#{usuarioBean.rut}" maxlength="8">	
+					 <pe:keyFilter regEx="/[\d]/"/>
+					</p:inputText>
 					<h:outputText value="Primer Nombre : " />
 					<p:inputText value="#{usuarioBean.nombre}" />
 					<h:outputText value="Segundo Nombre : " />
@@ -348,7 +350,7 @@
 					<h:outputText value="Apellido Materno : " />
 					<p:inputText value="#{usuarioBean.apellido2}" />
 					<h:outputText value="Contraseña : " />
-					<p:inputText value="#{usuarioBean.pass}" />
+					<p:password value="#{usuarioBean.pass}" />
 					<h:outputText value="Cargo : " />
 					<p:selectOneMenu value="#{usuarioBean.nivel}" label="origen">
 						<f:selectItems value="#{usuarioBean.niveles()}" var="niveles" />
@@ -374,8 +376,10 @@
 
 
 				<h:panelGrid id="modUsuario" columns="2" cellpadding="5">
-					<h:outputText value="Primer Nombre : " />
-					<p:inputText value="#{usuarioBean.usuarioAux.rut}" />
+					<h:outputText value="Rut : " />
+					<p:inputText value="#{usuarioBean.usuarioAux.rut}" maxlength="8">
+					 <pe:keyFilter regEx="/[\d]/"/>
+					</p:inputText>
 					<h:outputText value="Primer Nombre : " />
 					<p:inputText value="#{usuarioBean.usuarioAux.nombre}" />
 					<h:outputText value="Segundo Nombre : " />
@@ -384,8 +388,10 @@
 					<p:inputText value="#{usuarioBean.usuarioAux.apellido}" />
 					<h:outputText value="Apellido Materno : " />
 					<p:inputText value="#{usuarioBean.usuarioAux.apellido2}" />
-					<h:outputText value="Contraseña : " />
-					<p:inputText value="#{usuarioBean.usuarioAux.pass}" />
+					<h:outputText value="Contraseña Antigua : " />
+					<p:password value="#{usuarioBean.passAntiguo}" />
+					<h:outputText value="Contraseña Nueva : " />
+					<p:password value="#{usuarioBean.pass}" />
 <!-- 					<h:outputText value="Cargo : " /> -->
 <!-- 					<p:selectOneMenu value="#{usuarioBean.usuarioAux.nivel}" label="origen"> -->
 <!-- 						<f:selectItems value="#{usuarioBean.niveles()}" var="niveles" /> -->
